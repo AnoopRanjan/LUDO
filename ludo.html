@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ludo Master | Classic Board Game Online</title>
+  <meta name="description" content="Play Ludo Master online against 4 levels of smart AI or with friends in local multiplayer. Modern colorful board, 3D rolling dice, realistic sound effects and authentic rules!">
+  
+  <!-- Google Fonts: Fredoka & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="ludo.css">
+</head>
+<body>
+  <!-- Celebratory Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- UNIFIED SITE PORTAL NAVIGATION -->
+  <nav class="site-portal-nav" aria-label="Games Portal Navigation">
+    <a href="index.html" class="portal-brand" title="Arcade Hub">
+      <span class="portal-logo-icon">🎮</span>
+      <span class="portal-title">ARCADE ARENA</span>
+    </a>
+
+    <div class="portal-game-tabs">
+      <a href="index.html" class="portal-tab-link" title="Play Emoji Movie Guessing Game">
+        <span>🎬</span>
+        <span>Emoji Flicks</span>
+      </a>
+      <a href="ludo.html" class="portal-tab-link active" title="Play Ludo Master">
+        <span>🎲</span>
+        <span>Ludo Master</span>
+        <span class="badge-pill-new">NEW</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- LUDO GAME HEADER -->
+  <header class="ludo-header">
+    <div class="game-title-wrap">
+      <h1 class="game-title">
+        <span>🎲</span>
+        <span>LUDO MASTER</span>
+      </h1>
+      <span class="header-meta-pill" id="header-difficulty-badge">Royal Edition 👑</span>
+    </div>
+
+    <div class="header-actions">
+      <button id="btn-sound-toggle" class="btn-header-icon" title="Toggle Sound FX" aria-label="Toggle Sound">
+        <span id="sound-icon">🔊</span>
+      </button>
+      <button id="btn-show-rules" class="btn-header-icon" title="Game Rules & How to Play" aria-label="How to Play">
+        <span>❓</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN APP VIEWPORT -->
+  <main class="app-viewport">
+    
+    <!-- ======================================================================
+         SCREEN 1: GAME SETUP SCREEN
+         ====================================================================== -->
+    <section id="screen-setup" class="game-screen active">
+      <div class="setup-container">
+        
+        <div class="setup-hero">
+          <div class="setup-hero-icon">🎲👑</div>
+          <h1>Ludo Championship</h1>
+          <p>Roll a six, lead your tokens, capture opponents, and race to Home victory!</p>
+        </div>
+
+        <!-- 1. GAME MODE SELECTION -->
+        <div class="setup-section">
+          <div class="section-label">
+            <span>Select Game Mode</span>
+          </div>
+          <div class="mode-toggle-group" role="radiogroup" aria-label="Game Mode">
+            <button type="button" class="mode-option-btn active" data-mode="ai" role="radio" aria-checked="true">
+              <span class="mode-btn-icon">🤖</span>
+              <div class="mode-btn-content">
+                <h3>Play vs Computer (AI)</h3>
+                <p>1 Human player against 1, 2 or 3 intelligent AI opponents</p>
+              </div>
+            </button>
+
+            <button type="button" class="mode-option-btn" data-mode="multiplayer" role="radio" aria-checked="false">
+              <span class="mode-btn-icon">👥</span>
+              <div class="mode-btn-content">
+                <h3>Pass & Play Multiplayer</h3>
+                <p>2, 3 or 4 players on this same screen</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. DIFFICULTY SELECTION (4 Selectable Levels) -->
+        <div class="setup-section">
+          <div class="section-label">
+            <span>Select AI Difficulty</span>
+            <span class="section-label-hint" id="diff-section-hint">Affects AI decision-making only</span>
+          </div>
+          <div class="difficulty-grid" role="radiogroup" aria-label="Difficulty Level">
+            <button type="button" class="diff-card-btn" data-diff="beginner" role="radio" aria-checked="false">
+              <div class="diff-icon">🌱</div>
+              <strong class="diff-name">Beginner</strong>
+              <span class="diff-desc">Casual & random, great for kids</span>
+            </button>
+
+            <button type="button" class="diff-card-btn active" data-diff="intermediate" role="radio" aria-checked="true">
+              <div class="diff-icon">⚡</div>
+              <strong class="diff-name">Intermediate</strong>
+              <span class="diff-desc">Captures pieces & escapes danger</span>
+            </button>
+
+            <button type="button" class="diff-card-btn" data-diff="pro" role="radio" aria-checked="false">
+              <div class="diff-icon">🔥</div>
+              <strong class="diff-name">Pro</strong>
+              <span class="diff-desc">Tactical defense & safe star control</span>
+            </button>
+
+            <button type="button" class="diff-card-btn" data-diff="expert" role="radio" aria-checked="false">
+              <div class="diff-icon">👑</div>
+              <strong class="diff-name">Expert</strong>
+              <span class="diff-desc">Multi-threat calculation & ambush strategy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. PLAYER COUNT SELECTION -->
+        <div class="setup-section">
+          <div class="section-label">
+            <span>Number of Players</span>
+          </div>
+          <div class="player-count-group" role="radiogroup" aria-label="Player Count">
+            <button type="button" class="count-btn" data-count="2" role="radio" aria-checked="false">
+              <span>⚔️ 2 Players</span>
+            </button>
+            <button type="button" class="count-btn" data-count="3" role="radio" aria-checked="false">
+              <span>🔺 3 Players</span>
+            </button>
+            <button type="button" class="count-btn active" data-count="4" role="radio" aria-checked="true">
+              <span>⭐ 4 Players</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. PLAYER ROSTER & CUSTOM NAMES -->
+        <div class="setup-section">
+          <div class="section-label">
+            <span>Player Lineup & Names</span>
+          </div>
+          <div class="roster-card" id="setup-roster-list">
+            <!-- Dynamically populated rows for Red, Green, Yellow, Blue -->
+          </div>
+        </div>
+
+        <!-- START & RULES ACTIONS -->
+        <div class="setup-actions">
+          <button type="button" class="btn-primary-start" id="btn-start-game">
+            <span>🎲</span>
+            <span>START GAME</span>
+          </button>
+          <button type="button" class="btn-secondary-rules" id="btn-show-rules-setup">
+            <span>📖</span>
+            <span>Rules & How to Play</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SCREEN 2: IN-GAME PLAYING SCREEN
+         ====================================================================== -->
+    <section id="screen-gameplay" class="game-screen">
+      <div class="gameplay-layout">
+
+        <!-- Turn Notification Banner -->
+        <div class="turn-banner-card" id="turn-banner-card">
+          <div class="turn-banner-left">
+            <div class="turn-player-avatar" id="turn-player-avatar">👤</div>
+            <div class="turn-info-text">
+              <h3 id="turn-player-name">Player 1's Turn</h3>
+              <p id="turn-instruction">Roll the dice to start your turn!</p>
+            </div>
+          </div>
+          <div class="turn-banner-right">
+            <span class="game-log-pill" id="game-log-pill">Game Started</span>
+          </div>
+        </div>
+
+        <!-- Move Suggestion Tooltip (Beginner hint / learning assist) -->
+        <div class="move-hint-box" id="move-hint-box" style="display: none;">
+          <span>💡</span>
+          <span id="move-hint-text">Tip: Move your token out of base!</span>
+        </div>
+
+        <!-- THE 15x15 LUDO BOARD -->
+        <div class="board-wrapper" id="board-wrapper">
+          <div class="ludo-board" id="ludo-board-grid">
+            <!-- Cells & Base Yards dynamically rendered via JS -->
+          </div>
+        </div>
+
+        <!-- 3D INTERACTIVE DICE ROLLER ACTION AREA -->
+        <div class="dice-action-area">
+          <div class="dice-scene" id="dice-scene" title="Click to Roll Dice!">
+            <div class="dice-cube" id="dice-cube">
+              <!-- Face 1 -->
+              <div class="dice-face face-1">
+                <span class="pip"></span>
+              </div>
+              <!-- Face 6 -->
+              <div class="dice-face face-6">
+                <span class="pip"></span><span class="pip"></span>
+                <span class="pip"></span><span class="pip"></span>
+                <span class="pip"></span><span class="pip"></span>
+              </div>
+              <!-- Face 3 -->
+              <div class="dice-face face-3">
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 4 -->
+              <div class="dice-face face-4">
+                <span class="pip"></span><span class="pip"></span>
+                <span class="pip"></span><span class="pip"></span>
+              </div>
+              <!-- Face 2 -->
+              <div class="dice-face face-2">
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 5 -->
+              <div class="dice-face face-5">
+                <span class="pip"></span><span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span><span class="pip"></span>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-roll-dice" id="btn-roll-dice">
+            <span>🎲</span>
+            <span>ROLL DICE</span>
+          </button>
+
+          <div class="dice-status-callout" id="dice-status-callout">
+            Your Turn!
+          </div>
+        </div>
+
+        <!-- PLAYERS STATUS HUD -->
+        <div class="players-hud-grid" id="players-hud-grid">
+          <!-- Populated with player stats, tokens home, and active turn indicator -->
+        </div>
+
+        <!-- IN-GAME BOTTOM TOOLBAR -->
+        <div class="game-bottom-toolbar">
+          <div class="toolbar-group">
+            <button type="button" class="btn-toolbar-pill" id="btn-speed-toggle" title="Change Animation Speed">
+              <span>⏱️ Speed 1x</span>
+            </button>
+            <button type="button" class="btn-toolbar-pill active" id="btn-hints-toggle" title="Toggle Move Suggestions">
+              <span>💡 Hints ON</span>
+            </button>
+          </div>
+          <div class="toolbar-group">
+            <button type="button" class="btn-toolbar-pill" id="btn-quit-game" title="Quit to Setup Screen">
+              <span>✕ Quit Game</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       MODAL 1: RULES & HOW TO PLAY
+       ====================================================================== -->
+  <div id="modal-rules" class="ludo-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rules-modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span>📖</span>
+          <h2 id="rules-modal-title">Standard Ludo Rules & Guide</h2>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-rules" aria-label="Close Rules">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="rule-item">
+          <span class="rule-number">1</span>
+          <div class="rule-text">
+            <h4>Deploying Tokens (Need a Six)</h4>
+            <p>All tokens start in your yard base. You must roll a <strong>6</strong> to bring a token out onto your colored starting square.</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-number">2</span>
+          <div class="rule-text">
+            <h4>Bonus Turn on Rolling 6</h4>
+            <p>Rolling a 6 grants you another roll! However, rolling <strong>three 6s in a row</strong> cancels the third roll and passes the turn.</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-number">3</span>
+          <div class="rule-text">
+            <h4>Moving Along the Track</h4>
+            <p>Move your token clockwise along the 52-cell track according to the exact number shown on the dice.</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-number">4</span>
+          <div class="rule-text">
+            <h4>Capturing Opponents (Knockout)</h4>
+            <p>Landing on an opponent’s token on any regular square captures it! The captured piece returns to its base, and <strong>you earn a free bonus roll</strong>!</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-number">5</span>
+          <div class="rule-text">
+            <h4>Safe Squares (Star Squares ★)</h4>
+            <p>The 4 colored starting squares and 4 star-marked squares (★) are safe zones. Tokens on safe squares cannot be captured and can coexist safely!</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-number">6</span>
+          <div class="rule-text">
+            <h4>Home Stretch & Winning</h4>
+            <p>Tokens enter their own colored home column towards the central triangle. A token requires the <strong>exact roll</strong> to enter Home. The first player to bring all 4 tokens home wins!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-action" id="btn-dismiss-rules">Got It, Let's Play!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 2: VICTORY PODIUM
+       ====================================================================== -->
+  <div id="modal-victory" class="ludo-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="victory-modal-title">
+    <div class="modal-dialog">
+      <div class="modal-body victory-card">
+        <div class="victory-trophy-hero">🏆</div>
+        <h2 id="victory-winner-name">Player 1 Wins!</h2>
+        <p class="victory-subtitle">Congratulations on mastering the Ludo board!</p>
+
+        <div class="podium-ranks-list" id="podium-ranks-list">
+          <!-- Filled dynamically with 1st, 2nd, 3rd, 4th place standings -->
+        </div>
+
+        <div class="victory-actions">
+          <button type="button" class="btn-primary-start" id="btn-rematch">
+            <span>🔄</span>
+            <span>Rematch</span>
+          </button>
+          <button type="button" class="btn-secondary-rules" id="btn-new-game">
+            <span>⚙️</span>
+            <span>New Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LUDO ENGINE -->
+  <script src="confetti.js"></script>
+  <script src="ludo-audio.js"></script>
+  <script src="ludo-ai.js"></script>
+  <script src="ludo.js"></script>
+</body>
+</html>
