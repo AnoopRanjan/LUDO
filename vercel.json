@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/ludo", "destination": "/ludo.html" },
+    { "source": "/emoji", "destination": "/index.html" }
+  ]
+}
